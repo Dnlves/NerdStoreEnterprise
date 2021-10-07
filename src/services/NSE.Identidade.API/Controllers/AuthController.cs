@@ -8,6 +8,7 @@ using static NSE.Identidade.API.Models.UserViewModels;
 
 namespace NSE.Identidade.API.Controllers
 {
+    [ApiController]
     [Route("api/identidade")]
     public class AuthController : Controller
     {
