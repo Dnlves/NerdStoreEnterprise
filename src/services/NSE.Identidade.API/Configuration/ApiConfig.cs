@@ -22,7 +22,7 @@ namespace NSE.Identidade.API.Configuration
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 

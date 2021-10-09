@@ -2,7 +2,19 @@
   "version": "2.0.0",
   "tasks": [
     {
-      "label": "build",
+      "label": "build-mvc",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/src/web/NSE.WebApp.MVC/NSE.WebApp.MVC.csproj",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "build-identidade-api",
       "command": "dotnet",
       "type": "process",
       "args": [
@@ -26,7 +38,20 @@
       "problemMatcher": "$msCompile"
     },
     {
-      "label": "watch",
+      "label": "watch-mvc",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "watch",
+        "run",
+        "${workspaceFolder}/src/web/NSE.WebApp.MVC/NSE.WebApp.MVC.csproj",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "watch-identidade-api",
       "command": "dotnet",
       "type": "process",
       "args": [

@@ -2,13 +2,33 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": ".NET Core Launch (MVC)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-mvc",
+      "program": "${workspaceFolder}/src/web/NSE.WebApp.MVC/bin/Debug/net5.0/NSE.WebApp.MVC.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/src/web/NSE.WebApp.MVC",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      }
+    },
+    {
       // Use IntelliSense to find out which attributes exist for C# debugging
       // Use hover for the description of the existing attributes
       // For further information visit https://github.com/OmniSharp/omnisharp-vscode/blob/master/debugger-launchjson.md
-      "name": ".NET Core Launch (web)",
+      "name": ".NET Core Launch (Identidade)",
       "type": "coreclr",
       "request": "launch",
-      "preLaunchTask": "build",
+      "preLaunchTask": "build-identidade-api",
       // If you have changed target frameworks, make sure to update the program path.
       "program": "${workspaceFolder}/src/services/NSE.Identidade.API/bin/Debug/net5.0/NSE.Identidade.API.dll",
       "args": [],
@@ -30,6 +50,15 @@
       "name": ".NET Core Attach",
       "type": "coreclr",
       "request": "attach"
+    }
+  ],
+  "compounds": [
+    {
+      "name": "Identidade Api + MVC",
+      "configurations": [
+        ".NET Core Launch (MVC)",
+        ".NET Core Launch (Identidade)"
+      ]
     }
   ]
 }
