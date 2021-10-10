@@ -26,6 +26,18 @@
       "problemMatcher": "$msCompile"
     },
     {
+      "label": "build-catalogo-api",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/src/services/NSE.Catalogo.API/NSE.Catalogo.API.csproj",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
       "label": "publish",
       "command": "dotnet",
       "type": "process",
@@ -58,6 +70,19 @@
         "watch",
         "run",
         "${workspaceFolder}/src/services/NSE.Identidade.API/NSE.Identidade.API.csproj",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "watch-catalogo-api",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "watch",
+        "run",
+        "${workspaceFolder}/src/services/NSE.Catalogo.API/NSE.Catalogo.API.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
