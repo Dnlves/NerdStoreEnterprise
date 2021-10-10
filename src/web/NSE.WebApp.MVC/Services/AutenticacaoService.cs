@@ -1,7 +1,10 @@
+using System;
 using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Options;
+using NSE.WebApp.MVC.Extensions;
 using NSE.WebApp.MVC.Models;
 using static NSE.WebApp.MVC.Models.UsuarioViewModel;
 
@@ -11,8 +14,9 @@ namespace NSE.WebApp.MVC.Services
     {
         private readonly HttpClient _httpClient;
 
-        public AutenticacaoService(HttpClient httpClient)
+        public AutenticacaoService(HttpClient httpClient, IOptions<AppSettings> settings)
         {
+            httpClient.BaseAddress = new Uri(settings.Value.AutenticacaoUrl);
             _httpClient = httpClient;
         }
 
@@ -21,8 +25,7 @@ namespace NSE.WebApp.MVC.Services
         {
             var loginContent = ObterConteudo(usuarioLogin);
             
-            var response = await _httpClient.PostAsync("http://localhost:5100/api/identidade/autenticar", loginContent);
-
+            var response = await _httpClient.PostAsync("/api/identidade/autenticar", loginContent);
 
             if (!TratarErrosResponse(response))
             {
@@ -39,7 +42,7 @@ namespace NSE.WebApp.MVC.Services
         {
             var registroContent = ObterConteudo(usuarioRegistro);
             
-            var response = await _httpClient.PostAsync("http://localhost:5100/api/identidade/nova-conta", registroContent);
+            var response = await _httpClient.PostAsync("/api/identidade/nova-conta", registroContent);
 
             if (!TratarErrosResponse(response))
             {
