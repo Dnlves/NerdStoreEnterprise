@@ -9,7 +9,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
-using NSE.Identidade.API.Extensions;
+using NSE.WebAPI.Core.Identidade;
 using static NSE.Identidade.API.Models.UserViewModels;
 
 namespace NSE.Identidade.API.Controllers
