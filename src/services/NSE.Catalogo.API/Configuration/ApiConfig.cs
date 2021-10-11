@@ -39,8 +39,8 @@ namespace NSE.Catalogo.API.Configuration
             // app.UseHttpsRedirection();
 
             app.UseRouting();
-
-            app.UseAuthorization();
+            
+            app.UseCors("Total");
 
             app.UseAuthConfiguration();
 
