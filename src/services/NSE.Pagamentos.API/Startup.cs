@@ -12,7 +12,7 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using Microsoft.OpenApi.Models;
 
-namespace NSE.Cliente.API
+namespace NSE.Pagamentos.API
 {
     public class Startup
     {
@@ -30,7 +30,7 @@ namespace NSE.Cliente.API
             services.AddControllers();
             services.AddSwaggerGen(c =>
             {
-                c.SwaggerDoc("v1", new OpenApiInfo { Title = "NSE.Cliente.API", Version = "v1" });
+                c.SwaggerDoc("v1", new OpenApiInfo { Title = "NSE.Pagamentos.API", Version = "v1" });
             });
         }
 
@@ -41,10 +41,10 @@ namespace NSE.Cliente.API
             {
                 app.UseDeveloperExceptionPage();
                 app.UseSwagger();
-                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NSE.Cliente.API v1"));
+                app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "NSE.Pagamentos.API v1"));
             }
 
-            // app.UseHttpsRedirection();
+            app.UseHttpsRedirection();
 
             app.UseRouting();
 

@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
-namespace NSE.Pagamento.API
+namespace NSE.Pedidos.API
 {
     public class Program
     {
