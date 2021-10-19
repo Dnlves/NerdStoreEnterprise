@@ -38,6 +38,18 @@
       "problemMatcher": "$msCompile"
     },
     {
+      "label": "build-cliente-api",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/src/services/NSE.Clientes.API/NSE.Clientes.API.csproj",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
       "label": "publish",
       "command": "dotnet",
       "type": "process",
@@ -83,6 +95,19 @@
         "watch",
         "run",
         "${workspaceFolder}/src/services/NSE.Catalogo.API/NSE.Catalogo.API.csproj",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "watch-cliente-api",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "watch",
+        "run",
+        "${workspaceFolder}/src/services/NSE.Clientes.API/NSE.Clientes.API.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],

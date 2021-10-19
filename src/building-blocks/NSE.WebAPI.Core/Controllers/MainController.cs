@@ -1,13 +1,12 @@
 using System.Collections.Generic;
 using System.Linq;
-
+using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 
-namespace NSE.Identidade.API.Controllers
+namespace NSE.WebAPI.Core.Controllers
 {
     [ApiController]
-    [Route("api/[controller]")]
     public abstract class MainController : Controller
     {
         protected ICollection<string> Erros = new List<string>();
@@ -39,6 +38,15 @@ namespace NSE.Identidade.API.Controllers
             return CustomResponse();
         }
 
+        protected ActionResult CustomResponse(ValidationResult validationResult)
+        {
+            foreach (var erro in validationResult.Errors)
+            {
+                AdicionarErroProcessamento(erro.ErrorMessage);
+            }
+
+            return CustomResponse();
+        }
 
         protected bool OperacaoValida()
         {
