@@ -5,12 +5,12 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
-using EasyNetQ;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 using NSE.Core.Messages.Integration;
+using NSE.MessageBus;
 using NSE.WebAPI.Core.Controllers;
 using NSE.WebAPI.Core.Identidade;
 using static NSE.Identidade.API.Models.UserViewModels;
@@ -24,17 +24,18 @@ namespace NSE.Identidade.API.Controllers
         private readonly UserManager<IdentityUser> _userManager;
         private readonly AppSettings _appSettings;
 
-        private IBus _bus;
+        private IMessageBus _bus;
 
 
         public AuthController(
             SignInManager<IdentityUser> signInManager,
             UserManager<IdentityUser> userManager,
-            IOptions<AppSettings> appSettings)
+            IOptions<AppSettings> appSettings, IMessageBus bus)
         {
             _signInManager = signInManager;
             _userManager = userManager;
             _appSettings = appSettings.Value;
+            _bus = bus;
         }
 
 
@@ -54,7 +55,14 @@ namespace NSE.Identidade.API.Controllers
 
             if (result.Succeeded)
             {
-                var sucesso = await RegistrarCliente(usuarioRegistro);
+                var clienteResult = await RegistrarCliente(usuarioRegistro);
+
+                if (!clienteResult.ValidationResult.IsValid)
+                {
+                    await _userManager.DeleteAsync(user);
+                    return CustomResponse(clienteResult.ValidationResult);
+                }
+
                 return CustomResponse(await GerarJwt(usuarioRegistro.Email));
             }
 
@@ -64,21 +72,6 @@ namespace NSE.Identidade.API.Controllers
             }
 
             return CustomResponse();
-        }
-
-
-        private async Task<ResponseMessage> RegistrarCliente(UsuarioRegistro usuarioRegistro)
-        {
-            var usuario = await _userManager.FindByEmailAsync(usuarioRegistro.Email);
-
-            var usuarioRegistrado = new UsuarioRegistradoIntegrationEvent(
-                Guid.Parse(usuario.Id), usuarioRegistro.Nome, usuarioRegistro.Email, usuarioRegistro.Cpf);
-
-            _bus = RabbitHutch.CreateBus(connectionString: "host=localhost:5672");
-
-            var sucesso = await _bus.Rpc.RequestAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(usuarioRegistrado);
-
-            return sucesso;
         }
 
 
@@ -108,6 +101,7 @@ namespace NSE.Identidade.API.Controllers
             AdicionarErroProcessamento("Usuário ou senha incorretos");
             return CustomResponse();
         }
+
 
 
         private async Task<UsuarioRespostaLogin> GerarJwt(string email)
@@ -182,5 +176,25 @@ namespace NSE.Identidade.API.Controllers
                                                                 minute: 0, 
                                                                 second: 0, 
                                                                 offset: TimeSpan.Zero)).TotalSeconds);
+
+        
+        private async Task<ResponseMessage> RegistrarCliente(UsuarioRegistro usuarioRegistro)
+        {
+            var usuario = await _userManager.FindByEmailAsync(usuarioRegistro.Email);
+
+            var usuarioRegistrado = new UsuarioRegistradoIntegrationEvent(
+                Guid.Parse(usuario.Id), usuarioRegistro.Nome, usuarioRegistro.Email, usuarioRegistro.Cpf);
+
+            try
+            {
+                return await _bus.RequestAsync<UsuarioRegistradoIntegrationEvent, ResponseMessage>(usuarioRegistrado);
+            }
+            catch 
+            {
+                await _userManager.DeleteAsync(usuario);
+                throw;
+            }
+        }
+
     }
 }
