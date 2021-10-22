@@ -22,7 +22,7 @@ namespace NSE.Carrinho.API.Model
         public CarrinhoCliente CarrinhoCliente { get; set; }
 
 
-        internal void AdicionarItem(Guid carrinhoId)
+        internal void AssociarCarrinho(Guid carrinhoId)
         {
             CarrinhoId = carrinhoId;
         }
@@ -35,6 +35,11 @@ namespace NSE.Carrinho.API.Model
         internal void AdicionarUnidades(int unidades)
         {
             Quantidade += unidades;
+        }
+
+        internal void AtualizarUnidades(int unidades)
+        {
+            Quantidade = unidades;
         }
 
         internal bool EhValido()
