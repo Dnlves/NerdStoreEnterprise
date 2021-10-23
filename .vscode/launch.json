@@ -2,6 +2,26 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": ".NET Core Launch (Bff.Compras)",
+      "type": "coreclr",
+      "request": "launch",
+      "preLaunchTask": "build-bff-compras",
+      "program": "${workspaceFolder}/src/api-gateways/NSE.Bff.Compras/bin/Debug/net5.0/NSE.Bff.Compras.dll",
+      "args": [],
+      "cwd": "${workspaceFolder}/src/api-gateways/NSE.Bff.Compras",
+      "stopAtEntry": false,
+      "serverReadyAction": {
+        "action": "openExternally",
+        "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+      },
+      "env": {
+        "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sourceFileMap": {
+        "/Views": "${workspaceFolder}/Views"
+      }
+    },
+    {
       "name": ".NET Core Launch (Carrinho)",
       "type": "coreclr",
       "request": "launch",
@@ -109,13 +129,14 @@
   ],
   "compounds": [
     {
-      "name": "Identidade + MVC + Catalogo + Cliente + Carrinho",
+      "name": "NERDSTORE ENTERPRISE",
       "configurations": [
         ".NET Core Launch (MVC)",
         ".NET Core Launch (Identidade)",
         ".NET Core Launch (Catalogo)",
         ".NET Core Launch (Cliente)",
         ".NET Core Launch (Carrinho)",
+        ".NET Core Launch (Bff.Compras)"
       ]
     }
   ]

@@ -62,6 +62,18 @@
       "problemMatcher": "$msCompile"
     },
     {
+      "label": "build-bff-compras",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "build",
+        "${workspaceFolder}/src/api-gateways/NSE.Bff.Compras/NSE.Bff.Compras.csproj",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
       "label": "publish",
       "command": "dotnet",
       "type": "process",
@@ -133,6 +145,19 @@
         "watch",
         "run",
         "${workspaceFolder}/src/services/NSE.Carrinho.API/NSE.Carrinho.API.csproj",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "watch-bff-compras",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "watch",
+        "run",
+        "${workspaceFolder}/src/services/NSE.Bff.Compras/NSE.Bff.Compras.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
