@@ -1,11 +1,9 @@
 using System;
 using System.Net.Http;
-using System.Text;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
+using NSE.Core.Communication;
 using NSE.WebApp.MVC.Extensions;
-using NSE.WebApp.MVC.Models;
 using static NSE.WebApp.MVC.Models.UsuarioViewModel;
 
 namespace NSE.WebApp.MVC.Services
