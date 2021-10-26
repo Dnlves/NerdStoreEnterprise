@@ -9,15 +9,33 @@
     }
   },
   "profiles": {
-    "IIS Express": {
+    "IIS - Dev": {
       "commandName": "IISExpress",
       "launchBrowser": true,
       "launchUrl": "swagger",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
+      },
+      "sqlDebugging": true,
+      "nativeDebugging": true
+    },
+    "IIS - Staging": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Staging"
       }
     },
-    "NSE.Pedidos.API": {
+    "IIS - Prod": {
+      "commandName": "IISExpress",
+      "launchBrowser": true,
+      "launchUrl": "swagger",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
+      }
+    },
+    "SelfHosting": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,
