@@ -62,6 +62,18 @@
       "problemMatcher": "$msCompile"
     },
     {
+    "label": "build-pedido-api",
+    "command": "dotnet",
+    "type": "process",
+    "args": [
+      "build",
+      "${workspaceFolder}/src/services/NSE.Pedidos.API/NSE.Pedidos.API.csproj",
+      "/property:GenerateFullPaths=true",
+      "/consoleloggerparameters:NoSummary"
+    ],
+    "problemMatcher": "$msCompile"
+  },
+    {
       "label": "build-bff-compras",
       "command": "dotnet",
       "type": "process",
@@ -145,6 +157,19 @@
         "watch",
         "run",
         "${workspaceFolder}/src/services/NSE.Carrinho.API/NSE.Carrinho.API.csproj",
+        "/property:GenerateFullPaths=true",
+        "/consoleloggerparameters:NoSummary"
+      ],
+      "problemMatcher": "$msCompile"
+    },
+    {
+      "label": "watch-pedido-api",
+      "command": "dotnet",
+      "type": "process",
+      "args": [
+        "watch",
+        "run",
+        "${workspaceFolder}/src/services/NSE.Pedidos.API/NSE.Pedidos.API.csproj",
         "/property:GenerateFullPaths=true",
         "/consoleloggerparameters:NoSummary"
       ],
