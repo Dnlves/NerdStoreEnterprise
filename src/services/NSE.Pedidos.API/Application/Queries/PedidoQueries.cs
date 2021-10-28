@@ -24,6 +24,7 @@ namespace NSE.Pedidos.API.Application.Queries
             _pedidoRepository = pedidoRepository;
         }
 
+
         public async Task<PedidoDTO> ObterUltimoPedido(Guid clienteId)
         {
             const string sql = @"SELECT
@@ -38,15 +39,11 @@ namespace NSE.Pedidos.API.Application.Queries
                                 ORDER BY P.DATACADASTRO DESC";
 
             var pedido = await _pedidoRepository.ObterConexao()
-                .QueryAsync<PedidoDTO, PedidoItemDTO, EnderecoDTO, PedidoDTO>(sql, (p, pi, e) => 
-                {
-                    p.PedidoItems.Add(pi);
-                    p.Endereco = e;
-                    return p;
-                }, new { clienteId }, splitOn: "");
+                .QueryAsync<dynamic>(sql, new { clienteId });
 
             return MapearPedido(pedido);
         }
+
 
         public async Task<IEnumerable<PedidoDTO>> ObterListaPorClienteId(Guid clienteId)
         {
@@ -54,6 +51,7 @@ namespace NSE.Pedidos.API.Application.Queries
 
             return pedidos.Select(PedidoDTO.ParaPedidoDTO);
         }
+        
 
         private PedidoDTO MapearPedido(dynamic result)
         {
