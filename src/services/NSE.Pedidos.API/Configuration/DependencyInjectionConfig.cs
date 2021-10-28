@@ -1,6 +1,10 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using FluentValidation.Results;
+using MediatR;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
 using NSE.Core.Mediator;
+using NSE.Pedidos.API.Application.Commands;
+using NSE.Pedidos.API.Application.Events;
 using NSE.Pedidos.API.Application.Queries;
 using NSE.Pedidos.Domain.Pedidos;
 using NSE.Pedidos.Domain.Vouchers;
@@ -17,10 +21,19 @@ namespace NSE.Pedidos.API.Configuration
             // API
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IAspNetUser, AspNetUser>();
+
+
+            // Commands
+            services.AddScoped<IRequestHandler<AdicionarPedidoCommand, ValidationResult>, PedidoCommandHandler>();
+
+            // Events
+            services.AddScoped<INotificationHandler<PedidoRealizadoEvent>, PedidoEventHandler>();
+
             
             // Application
             services.AddScoped<IMediatorHandler, MediatorHandler>();
             services.AddScoped<IVoucherQueries, VoucherQueries>();
+            services.AddScoped<IPedidoQueries, PedidoQueries>();
 
             // Data
             services.AddScoped<IPedidoRepository, PedidoRepository>();
