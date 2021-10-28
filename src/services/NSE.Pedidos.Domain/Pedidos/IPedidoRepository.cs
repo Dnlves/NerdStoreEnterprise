@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Threading.Tasks;
 using NSE.Core.Data;
 
@@ -12,6 +13,7 @@ namespace NSE.Pedidos.Domain.Pedidos
         void Adicionar(Pedido pedido);
         void Atualizar(Pedido pedido);
 
+        DbConnection ObterConexao();
 
         /* Pedido Item */
         Task<PedidoItem> ObterItemPorId(Guid id);

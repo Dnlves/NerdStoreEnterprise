@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -17,6 +18,8 @@ namespace NSE.Pedidos.Infra.Data.Repository
 
         private readonly PedidosContext _context;
         public IUnitOfWork UnitOfWork => throw new NotImplementedException();
+
+        public DbConnection ObterConexao() => _context.Database.GetDbConnection();
 
         public void Adicionar(Pedido pedido)
         {
@@ -57,5 +60,6 @@ namespace NSE.Pedidos.Infra.Data.Repository
         {
             throw new NotImplementedException();
         }
+
     }
 }
