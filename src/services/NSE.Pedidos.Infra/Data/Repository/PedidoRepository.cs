@@ -17,7 +17,7 @@ namespace NSE.Pedidos.Infra.Data.Repository
         }
 
         private readonly PedidosContext _context;
-        public IUnitOfWork UnitOfWork => throw new NotImplementedException();
+        public IUnitOfWork UnitOfWork => _context;
 
         public DbConnection ObterConexao() => _context.Database.GetDbConnection();
 
@@ -56,9 +56,9 @@ namespace NSE.Pedidos.Infra.Data.Repository
             return await _context.Pedidos.FindAsync(id);
         }
 
-        public void Dispose()
+         public void Dispose()
         {
-            throw new NotImplementedException();
+            _context.Dispose();
         }
 
     }

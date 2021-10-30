@@ -16,16 +16,6 @@ namespace NSE.WebApp.MVC.Services
         Task<ProdutoViewModel> ObterPorId(Guid id);
     }
 
-
-    public interface ICatalogoServiceRefit
-    {
-        [Get("/catalogo/produtos/")]
-        Task<IEnumerable<ProdutoViewModel>> ObterTodos();
-
-        [Get("/catalogo/produtos/{id}")]
-        Task<ProdutoViewModel> ObterPorId(Guid id);
-    }
-
     public class CatalogoService : Service, ICatalogoService
     {
         private readonly HttpClient _httpClient;

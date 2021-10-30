@@ -11,14 +11,14 @@ namespace NSE.Pedidos.API
 {
     public class Startup
     {
-public IConfiguration Configuration { get; }
+        public IConfiguration Configuration { get; }
 
         public Startup(IHostEnvironment hostEnvironment)
         {
             var builder = new ConfigurationBuilder()
                 .SetBasePath(hostEnvironment.ContentRootPath)
-                .AddJsonFile("appsettings.json", true, true)
-                .AddJsonFile($"appsettings.{hostEnvironment.EnvironmentName}.json", true, true)
+                .AddJsonFile("appsettings.json", true, false)
+                .AddJsonFile($"appsettings.{hostEnvironment.EnvironmentName}.json", true, false)
                 .AddEnvironmentVariables();
 
             // if (hostEnvironment.IsDevelopment())

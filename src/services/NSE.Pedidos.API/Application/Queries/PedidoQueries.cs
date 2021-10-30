@@ -8,7 +8,6 @@ using NSE.Pedidos.Domain.Pedidos;
 
 namespace NSE.Pedidos.API.Application.Queries
 {
-
     public interface IPedidoQueries
     {
         Task<PedidoDTO> ObterUltimoPedido(Guid clienteId);
@@ -24,7 +23,6 @@ namespace NSE.Pedidos.API.Application.Queries
             _pedidoRepository = pedidoRepository;
         }
 
-
         public async Task<PedidoDTO> ObterUltimoPedido(Guid clienteId)
         {
             const string sql = @"SELECT
@@ -34,16 +32,17 @@ namespace NSE.Pedidos.API.Application.Queries
                                 FROM PEDIDOS P 
                                 INNER JOIN PEDIDOITEMS PIT ON P.ID = PIT.PEDIDOID 
                                 WHERE P.CLIENTEID = @clienteId 
-                                AND P.DATACADASTRO between DATEADD(minute, -3,  GETDATE()) and DATEADD(minute, 0,  GETDATE())
+                                AND P.DATACADASTRO between DATEADD(day, -1,  GETDATE()) and DATEADD(day, 0,  GETDATE())
                                 AND P.PEDIDOSTATUS = 1 
                                 ORDER BY P.DATACADASTRO DESC";
 
-            var pedido = await _pedidoRepository.ObterConexao()
-                .QueryAsync<dynamic>(sql, new { clienteId });
+            
+            var conexao = _pedidoRepository.ObterConexao();
+            
+            var pedido = await conexao.QueryAsync<dynamic>(sql, new { clienteId });
 
             return MapearPedido(pedido);
         }
-
 
         public async Task<IEnumerable<PedidoDTO>> ObterListaPorClienteId(Guid clienteId)
         {
@@ -51,7 +50,6 @@ namespace NSE.Pedidos.API.Application.Queries
 
             return pedidos.Select(PedidoDTO.ParaPedidoDTO);
         }
-        
 
         private PedidoDTO MapearPedido(dynamic result)
         {
@@ -92,4 +90,5 @@ namespace NSE.Pedidos.API.Application.Queries
             return pedido;
         }
     }
+
 }
