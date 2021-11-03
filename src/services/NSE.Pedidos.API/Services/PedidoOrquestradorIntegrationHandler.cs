@@ -65,7 +65,7 @@ namespace NSE.Pedidos.API.Services
 
         public void Dispose()
         {
-            _timer.Dispose();
+            _timer?.Dispose();
         }
     }
 }

@@ -44,7 +44,7 @@ namespace NSE.Pedidos.API.Application.Commands
             if (!ValidarPedido(pedido)) return ValidationResult;
 
             // Processar pagamento
-            if (! await ProcessarPagamento(pedido, message)) return ValidationResult;
+            if (!await ProcessarPagamento(pedido, message)) return ValidationResult;
 
             // Se pagamento tudo ok!
             pedido.AutorizarPedido();

@@ -36,7 +36,7 @@ namespace NSE.Carrinho.API.Configuration
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            // app.UseHttpsRedirection();
 
             app.UseRouting();
 

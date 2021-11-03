@@ -10,7 +10,8 @@ namespace NSE.Catalogo.API.Configuration
     {
         public static void AddMessageBusConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            services.AddMessageBus(configuration.GetMessageQueueConnection("MessageBus"))
+            services
+                .AddMessageBus(configuration.GetMessageQueueConnection("MessageBus"))
                 .AddHostedService<CatalogoIntegrationHandler>();
         }
     }

@@ -33,6 +33,8 @@ namespace NSE.Catalogo.API
 
             services.AddApiConfiguration(Configuration);
 
+            services.AddMessageBusConfiguration(Configuration);
+
             services.AddJwtConfiguration(Configuration);
 
             services.AddSwaggerConfiguration();

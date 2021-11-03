@@ -27,7 +27,7 @@
         "ASPNETCORE_ENVIRONMENT": "Staging"
       }
     },
-    "IIS - Prod": {
+    "IIS - Production": {
       "commandName": "IISExpress",
       "launchBrowser": true,
       "launchUrl": "swagger",
@@ -35,7 +35,7 @@
         "ASPNETCORE_ENVIRONMENT": "Production"
       }
     },
-    "SelfHosting": {
+    "SelfHosting - Development": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,
