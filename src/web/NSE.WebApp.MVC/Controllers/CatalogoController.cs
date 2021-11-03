@@ -23,6 +23,8 @@ namespace NSE.WebApp.MVC.Controllers
 
             ViewBag.Pesquisa = q;
 
+            produtos.ReferenceAction = "Index";
+
             return View(produtos);
         }
 
