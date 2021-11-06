@@ -1,10 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.IdentityModel.Tokens.Jwt;
-using System.Security.Claims;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
 using NSE.WebApp.MVC.Services;
 using static NSE.WebApp.MVC.Models.UsuarioViewModel;
@@ -13,13 +7,13 @@ namespace NSE.WebApp.MVC.Controllers
 {
     public class IdentidadeController : MainController
     {
-        private readonly IAutenticacaoService _autenticacaoService;
+       private readonly IAutenticacaoService _autenticacaoService;
 
-        public IdentidadeController(IAutenticacaoService autenticacaoService)
+        public IdentidadeController(
+            IAutenticacaoService autenticacaoService)
         {
             _autenticacaoService = autenticacaoService;
         }
-
 
         [HttpGet]
         [Route("nova-conta")]
@@ -38,11 +32,10 @@ namespace NSE.WebApp.MVC.Controllers
 
             if (ResponsePossuiErros(resposta.ResponseResult)) return View(usuarioRegistro);
 
-            await RealizarLogin(resposta);
+            await _autenticacaoService.RealizarLogin(resposta);
 
-            return RedirectToAction(actionName: "Index", controllerName: "Catalogo");
+            return RedirectToAction("Index", "Catalogo");
         }
-
 
         [HttpGet]
         [Route("login")]
@@ -52,63 +45,30 @@ namespace NSE.WebApp.MVC.Controllers
             return View();
         }
 
-
         [HttpPost]
         [Route("login")]
         public async Task<IActionResult> Login(UsuarioLogin usuarioLogin, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
-
             if (!ModelState.IsValid) return View(usuarioLogin);
 
             var resposta = await _autenticacaoService.Login(usuarioLogin);
 
             if (ResponsePossuiErros(resposta.ResponseResult)) return View(usuarioLogin);
 
-            await RealizarLogin(resposta);
+            await _autenticacaoService.RealizarLogin(resposta);
 
-            if (string.IsNullOrEmpty(returnUrl)) return RedirectToAction(actionName: "Index", controllerName: "Catalogo");
+            if (string.IsNullOrEmpty(returnUrl)) return RedirectToAction("Index", "Catalogo");
 
             return LocalRedirect(returnUrl);
         }
-
 
         [HttpGet]
         [Route("sair")]
         public async Task<IActionResult> Logout()
         {
-            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-            return RedirectToAction(actionName: "Index", controllerName: "Catalogo");
-        }
-
-
-
-        private async Task RealizarLogin(UsuarioRespostaLogin usuarioResposta)
-        {
-            var token = ObterTokenFormatado(usuarioResposta.AccessToken);
-
-            var claims = new List<Claim>();
-            claims.Add(new Claim(type: "JWT", value: usuarioResposta.AccessToken));
-            claims.AddRange(token.Claims);
-
-            var claimsIdentity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-
-            var authProperties = new AuthenticationProperties
-            {
-                ExpiresUtc = DateTimeOffset.UtcNow.AddMinutes(60),
-                IsPersistent = true
-            };
-
-            await HttpContext.SignInAsync(
-                CookieAuthenticationDefaults.AuthenticationScheme,
-                new ClaimsPrincipal(claimsIdentity),
-                authProperties
-            );
-        }
-
-        private static JwtSecurityToken ObterTokenFormatado(string jwtToken)
-        {
-            return new JwtSecurityTokenHandler().ReadToken(jwtToken) as JwtSecurityToken;
+            await _autenticacaoService.Logout();
+            return RedirectToAction("Index", "Catalogo");
         }
     }
 }
