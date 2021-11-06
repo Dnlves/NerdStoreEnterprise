@@ -33,7 +33,7 @@ namespace NSE.Pedidos.API.Application.Queries
                                 FROM PEDIDOS P 
                                 INNER JOIN PEDIDOITEMS PIT ON P.ID = PIT.PEDIDOID 
                                 WHERE P.CLIENTEID = @clienteId 
-                                AND P.DATACADASTRO between DATEADD(day, -1,  GETDATE()) and DATEADD(day, 0,  GETDATE())
+                                AND P.DATACADASTRO between DATEADD(minute, -3, DATEADD(hour, -3, GETDATE())) AND DATEADD(minute, 0, DATEADD(hour, -3, GETDATE()))
                                 AND P.PEDIDOSTATUS = 1 
                                 ORDER BY P.DATACADASTRO DESC";
 
