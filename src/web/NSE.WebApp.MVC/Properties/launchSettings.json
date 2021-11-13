@@ -32,7 +32,7 @@
         "ASPNETCORE_HOSTINGSTARTUPASSEMBLIES": "Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation"
       }
     },
-    "SelfHosting - Development": {
+    "SelfHosting": {
       "commandName": "Project",
       "dotnetRunMessages": "true",
       "launchBrowser": true,

@@ -1,4 +1,3 @@
-using System.Text;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.Configuration;
@@ -24,7 +23,7 @@ namespace NSE.WebAPI.Core.Identidade
                 })
                 .AddJwtBearer(bearerOptions => 
                 {
-                    bearerOptions.RequireHttpsMetadata = false; //VOLTAR PRA TRUE DEPOIS
+                    bearerOptions.RequireHttpsMetadata = false; //VOLTAR PRA TRUE CASO TRABALHE PARA HTTPS
                     bearerOptions.SaveToken = true;
                     bearerOptions.SetJwksOptions(new JwkOptions(appSettings.AutenticacaoJwksUrl));
                 });
