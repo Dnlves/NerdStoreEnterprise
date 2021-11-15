@@ -1,0 +1,50 @@
+services:
+  rabbitmq:
+    image: rabbitmq:management
+    container_name: rabbitmq-nerdstore-management
+    ports: 
+      - 15672:15672  
+      - 5672:5672
+    environment:
+      RABBITMQ_DEFAULT_USER: "nerdstore"
+      RABBITMQ_DEFAULT_PASS: "nerdstore"
+
+  sql-server:
+    image: dnalves/nerdstore-sql-server:latest
+    container_name: nerdstore-sql-server
+    restart: unless-stopped
+    build:
+      context: ../sql
+      dockerfile: ./Dockerfile
+    environment:
+        SA_PASSWORD: "MeuDB@123"
+        ACCEPT_EULA: "Y"
+
+  web-mvc:
+    image: dnalves/nerdstore-web-mvc-ecommerce:latest
+    container_name: nerdstore-web-mvc-ecommerce
+    ports:
+      - 5000:5000
+    build:
+      context: ../src
+      dockerfile: ./web/NSE.WebApp.MVC/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://*:5000
+    depends_on:
+      - api-catalogo
+
+  api-catalogo:
+    image: dnalves/nerdstore-api-catalogo:latest
+    container_name: nerdstore-api-catalogo
+    build:
+      context: ../src
+      dockerfile: ./services/NSE.Catalogo.API/Dockerfile
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production
+      - ASPNETCORE_URLS=http://*:5200
+    depends_on:
+      - rabbitmq
+      - sql-server
+
+  
