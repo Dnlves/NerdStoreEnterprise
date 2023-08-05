@@ -28,7 +28,7 @@ namespace NSE.Clientes.API.Application.Commands
             return ValidationResult.IsValid;
         }
 
-        // classe aninhada de validação
+        
         public class RegistrarClienteValidation : AbstractValidator<RegistrarClienteCommand>
         {
             public RegistrarClienteValidation()

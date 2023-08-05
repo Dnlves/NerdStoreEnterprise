@@ -53,7 +53,6 @@ namespace NSE.Pedidos.API.Application.Queries
         }
         public async Task<PedidoDTO> ObterPedidosAutorizados()
         {
-            // Correção para pegar todos os itens do pedido e ordernar pelo pedido mais antigo
              const string sql = @"SELECT 
                                  P.ID as 'PedidoId', P.ID, P.CLIENTEID, 
                                  PI.ID as 'PedidoItemId', PI.ID, PI.PRODUTOID, PI.QUANTIDADE 
@@ -62,7 +61,6 @@ namespace NSE.Pedidos.API.Application.Queries
                                  WHERE P.PEDIDOSTATUS = 1                                
                                  ORDER BY P.DATACADASTRO";
 
-            //  Utilizacao do lookup para manter o estado a cada ciclo de registro retornado
              var lookup = new Dictionary<Guid, PedidoDTO>();
 
              await _pedidoRepository.ObterConexao().QueryAsync<PedidoDTO, PedidoItemDTO, PedidoDTO>(sql,
@@ -78,7 +76,6 @@ namespace NSE.Pedidos.API.Application.Queries
 
                  }, splitOn: "PedidoId,PedidoItemId");
 
-            //  Obtendo dados o lookup
              return lookup.Values.OrderBy(p=>p.Data).FirstOrDefault();
         }
 

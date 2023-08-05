@@ -31,31 +31,22 @@ namespace NSE.Pedidos.API.Application.Commands
 
         public async Task<ValidationResult> Handle(AdicionarPedidoCommand message, CancellationToken cancellationToken)
         {
-            // Validação do comando
             if (!message.EhValido()) return message.ValidationResult;
 
-            // Mapear Pedido
             var pedido = MapearPedido(message);
 
-            // Aplicar voucher se houver
             if (!await AplicarVoucher(message, pedido)) return ValidationResult;
 
-            // Validar pedido
             if (!ValidarPedido(pedido)) return ValidationResult;
 
-            // Processar pagamento
             if (!await ProcessarPagamento(pedido, message)) return ValidationResult;
 
-            // Se pagamento tudo ok!
             pedido.AutorizarPedido();
 
-            // Adicionar Evento
             pedido.AdicionarEvento(new PedidoRealizadoEvent(pedido.Id, pedido.ClienteId));
 
-            // Adicionar Pedido Repositorio
             _pedidoRepository.Adicionar(pedido);
 
-            // Persistir dados de pedido e voucher
             return await PersistirDados(_pedidoRepository.UnitOfWork);
         }
 
@@ -143,7 +134,7 @@ namespace NSE.Pedidos.API.Application.Commands
                 PedidoId = pedido.Id,
                 ClienteId = pedido.ClienteId,
                 Valor = pedido.ValorTotal,
-                TipoPagamento = 1, // fixo. Alterar se tiver mais tipos
+                TipoPagamento = 1,
                 NomeCartao = message.NomeCartao,
                 NumeroCartao = message.NumeroCartao,
                 MesAnoVencimento = message.ExpiracaoCartao,

@@ -11,7 +11,7 @@ services:
       RABBITMQ_DEFAULT_PASS: "nerdstore"
 
   sql-server:
-    image: dnalves/nerdstore-sql-server:latest
+    image: nerd/nerdstore-sql-server:latest
     container_name: nerdstore-sql-server
     restart: unless-stopped
     ports:
@@ -24,7 +24,7 @@ services:
         ACCEPT_EULA: "Y"
 
   web-mvc:
-    image: dnalves/nerdstore-web-mvc-ecommerce:latest
+    image: nerd/nerdstore-web-mvc-ecommerce:latest
     container_name: nerdstore-web-mvc-ecommerce
     ports:
       - 5000:5000
@@ -42,7 +42,7 @@ services:
       - api-bff-compras
 
   api-identidade:
-    image: dnalves/nerdstore-api-identidade:latest
+    image: nerd/nerdstore-api-identidade:latest
     container_name: nerdstore-api-identidade
     restart: unless-stopped
     build:
@@ -56,7 +56,7 @@ services:
       - sql-server
 
   api-catalogo:
-    image: dnalves/nerdstore-api-catalogo:latest
+    image: nerd/nerdstore-api-catalogo:latest
     container_name: nerdstore-api-catalogo
     restart: unless-stopped
     build:
@@ -70,7 +70,7 @@ services:
       - sql-server
 
   api-clientes:
-    image: dnalves/nerdstore-api-clientes:latest
+    image: nerd/nerdstore-api-clientes:latest
     container_name: nerdstore-api-clientes
     restart: unless-stopped
     build:
@@ -85,7 +85,7 @@ services:
       - api-identidade
 
   api-carrinho:
-    image: dnalves/nerdstore-api-carrinho:latest
+    image: nerd/nerdstore-api-carrinho:latest
     container_name: nerdstore-api-carrinho
     restart: unless-stopped
     build:
@@ -100,7 +100,7 @@ services:
       - api-identidade
 
   api-pedidos:
-    image: dnalves/nerdstore-api-pedidos:latest
+    image: nerd/nerdstore-api-pedidos:latest
     container_name: nerdstore-api-pedidos
     restart: unless-stopped
     build:
@@ -115,7 +115,7 @@ services:
       - api-identidade
 
   api-pagamentos:
-    image: dnalves/nerdstore-api-pagamentos:latest
+    image: nerd/nerdstore-api-pagamentos:latest
     container_name: nerdstore-api-pagamentos
     restart: unless-stopped
     build:
@@ -131,7 +131,7 @@ services:
       - api-pedidos
 
   api-bff-compras:
-    image: dnalves/nerdstore-api-bff-compras:latest
+    image: nerd/nerdstore-api-bff-compras:latest
     container_name: nerdstore-api-bff-compras
     restart: unless-stopped
     build:

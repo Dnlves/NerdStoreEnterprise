@@ -42,7 +42,6 @@ namespace NSE.Pagamentos.API.Services
                 validationResult.Errors.Add(new ValidationFailure("Pagamento",
                     "Houve um erro ao realizar o pagamento."));
 
-                // Cancelar pagamento no gateway
                 await CancelarPagamento(pagamento.PedidoId);
 
                 return new ResponseMessage(validationResult);

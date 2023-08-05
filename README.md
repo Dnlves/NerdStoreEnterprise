@@ -1,22 +1,24 @@
 # Nerd Store Enterprise
 
-## CRIANDO OS PROJETOS 
+## Tecnologias
 
-### API's
+- ASP.NET
+- ASP.NET Identity
+- Entity Framework Core
+- RabbitMQ
+- EasyNetQ
+- Refit
+- Polly
+- GRPC
+- Dapper
+- FluentValidator
+- MediatR
+- Swagger
+- NetDevPack
+- Docker
+
+## Como rodar a aplicação
+
 ```bash
-dotnet new webapi -n NSE.Carrinho.API
-dotnet new webapi -n NSE.Catalogo.API
-dotnet new webapi -n NSE.Cliente.API
-dotnet new webapi -n NSE.Identidade.API 
-dotnet new webapi -n NSE.Pagamento.API
-dotnet new webapi -n NSE.Pedido.API
+docker-compose -f nerdstore_producao.yml up
 ```
-### MVC
-```bash
-dotnet new mvc -n NSE.WebApp.MVC --razor-runtime-compilation 
-```
-### projeto Core
-```bash
-dotnet new classlib -n NSE.Core  
-```
---------------------------------------------------------------------------------
